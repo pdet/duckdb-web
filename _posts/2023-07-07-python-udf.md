@@ -83,8 +83,7 @@ con.sql("SELECT country, wc_titles(country) as world_cups from countries").fetch
 
 ### Generating Fake Data with Faker (Built-In Type UDF)
 Here is an example that demonstrates the usage of the [Faker library](https://faker.readthedocs.io/en/master/)  to generate a scalar function in DuckDB, which returns randomly generated dates. The function, named `random_date`, does not require any inputs and outputs a `DATE` column. Since Faker utilizes built-in Python types, the function directly returns them.
-One important thing to notice is that a function that is not deterministic based on its input must be marked as having `side_effects`.
-
+One important thing to notice is that UDFs are assumed not to modify global state and not to depend on mutable global state. So, if you have specific requirements that the function has to be re-evaluated (e.g., for accessing underlying randomness), add `side_effects=True.`
 ```python
 import duckdb
 
